@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     Mar 29, 2012 11:38:18 AM                                                        
+
+     XMLHyphenationTransformer    
+     A simple StAX transformer that hyphenates text nodes
+                   
+     christian.egli@sbs.ch                                                                
+     ====================================================================== -->
+<project name="XMLHyphenationTransformer" default="default">
+	<description>
+            A simple Stax transformer that hyphenates text nodes
+    </description>
+
+	<!-- ================================= 
+          target: default              
+         ================================= -->
+	<target name="default" depends="jar" description="A simple Stax transformer that hyphenates text nodes">
+
+	</target>
+
+	<target name="jar" depends="compile">
+		<jar destfile="${ant.project.name}.jar">
+			<fileset dir="bin"/>
+		</jar>
+	</target>
+
+	<target name="compile">
+		<javac srcdir="src" destdir="bin" classpath="jarfile" debug="on" includeantruntime="false" />
+	</target>
+</project>
