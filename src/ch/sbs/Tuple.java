@@ -1,30 +1,20 @@
 package ch.sbs;
 
+import ch.sbs.jhyphen.Hyphenator;
+
 import javax.xml.namespace.QName;
 
 public class Tuple {
 
-	  private final String language;
 	  private final QName node;
+	  private final Hyphenator hyphenator;
 
-	  public Tuple(String language, QName node) {
-	    this.language = language;
+	  public Tuple(QName node, Hyphenator hyphenator) {
 	    this.node = node;
+	    this.hyphenator = hyphenator;
 	  }
 
-	  public String getLanguage() { return language; }
 	  public QName getNode() { return node; }
+	  public Hyphenator getHyphenator() { return hyphenator; }
 
-	  @Override
-	  public int hashCode() { return language.hashCode() ^ node.hashCode(); }
-
-	  @Override
-	  public boolean equals(Object o) {
-	    if (o == null) return false;
-	    if (!(o instanceof Tuple)) return false;
-	    Tuple other = (Tuple) o;
-	    return this.language.equals(other.getLanguage()) &&
-	           this.node.equals(other.getNode());
-	  }
-
-	}
+}

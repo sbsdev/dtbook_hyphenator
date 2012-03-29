@@ -1,5 +1,7 @@
 package ch.sbs;
 
+import ch.sbs.jhyphen.Hyphenator;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -17,10 +19,14 @@ import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
 public class XMLHyphenationTransformer {
-	static String dtb = "http://www.daisy.org/z3986/2005/dtbook/";
-	static String brl = "http://www.daisy.org/z3986/2009/braille/";
-	static Set<QName> nonHyphenatedElements;
-	static QName xml_lang = new QName("http://www.w3.org/XML/1998/namespace",
+	static final String dtb = "http://www.daisy.org/z3986/2005/dtbook/";
+	static final String brl = "http://www.daisy.org/z3986/2009/braille/";
+	
+	//static final char SOFT_HYPHEN = '\u00AD';
+	static final char SOFT_HYPHEN = '=';
+	
+	static final Set<QName> nonHyphenatedElements;
+	static final QName xml_lang = new QName("http://www.w3.org/XML/1998/namespace",
 			"lang");
 
 	static {
@@ -32,7 +38,6 @@ public class XMLHyphenationTransformer {
 						"running-line"), new QName(brl, "literal"), new QName(
 						brl, "num")));
 		nonHyphenatedElements = Collections.unmodifiableSet(tmp);
-
 	}
 
 	XMLEventFactory m_eventFactory = XMLEventFactory.newInstance();
@@ -62,8 +67,8 @@ public class XMLHyphenationTransformer {
 				if (event.isStartElement()) {
 					if (event.asStartElement().getAttributeByName(xml_lang) != null) {
 						StartElement element = event.asStartElement();
-						languages.push(new Tuple(element.getAttributeByName(
-								xml_lang).getValue(), element.getName()));
+						languages.push(new Tuple(element.getName(), 
+								new Hyphenator(element.getAttributeByName(xml_lang).getValue())));
 					}
 					if (nonHyphenatedElements.contains(event.asStartElement()
 							.getName())) {
@@ -73,6 +78,7 @@ public class XMLHyphenationTransformer {
 				} else if (event.isEndElement()) {
 					if (event.asEndElement().getName()
 							.equals(languages.peek().getNode())) {
+						languages.peek().getHyphenator().close();
 						languages.pop();
 					}
 					if (nonHyphenatedElements.contains(event.asEndElement()
@@ -83,7 +89,7 @@ public class XMLHyphenationTransformer {
 				} else if (event.isCharacters()) {
 					if (hyphenate && !languages.empty()) {
 						writer.add(transformer.hyphenate(event.asCharacters(),
-								languages.peek().getLanguage()));
+								languages.peek().getHyphenator()));
 					} else {
 						writer.add(event);
 					}
@@ -97,7 +103,7 @@ public class XMLHyphenationTransformer {
 		}
 	}
 
-	Characters hyphenate(Characters event, String language) {
-		return m_eventFactory.createCharacters(event.getData().toUpperCase());
+	Characters hyphenate(Characters event, Hyphenator hyphenator) {
+		return m_eventFactory.createCharacters(hyphenator.hyphenate(event.getData(), SOFT_HYPHEN));
 	}
 }

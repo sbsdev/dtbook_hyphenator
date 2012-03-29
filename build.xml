@@ -12,6 +12,8 @@
             A simple Stax transformer that hyphenates text nodes
     </description>
 
+	<tstamp><format property="ISO-TODAY" pattern="yyyy-MM-dd"/></tstamp>
+	
 	<!-- ================================= 
           target: default              
          ================================= -->
@@ -19,13 +21,30 @@
 
 	</target>
 
-	<target name="jar" depends="compile">
-		<jar destfile="${ant.project.name}.jar">
+	<target name="jar" depends="clean,compile">
+		<mkdir dir="dist"/>
+		<jar destfile="dist/${ant.project.name}.jar">
 			<fileset dir="bin"/>
+			<manifest>
+                <attribute name="Built-By" value="${user.name}"/>
+                <attribute name="Built-On" value="${ISO-TODAY}"/>
+                <attribute name="Implementation-Title" value="${ant.project.name}"/>
+				<attribute name="Class-Path" value="jhyphen.jar"/>
+				<attribute name="Main-Class" value="ch.sbs.XMLHyphenationTransformer"/>
+            </manifest>
 		</jar>
+		<copy file="lib/jhyphen.jar" todir="dist"/>
 	</target>
 
-	<target name="compile">
-		<javac srcdir="src" destdir="bin" classpath="jarfile" debug="on" includeantruntime="false" />
+	<target name="compile" depends="clean">
+		<mkdir dir="bin"/>
+        <javac srcdir="src" destdir="bin" classpath="lib/jhyphen.jar"
+               debug="true" encoding="UTF-8" source="1.6" target="1.6"/>
 	</target>
+	
+	<target name="clean">
+		<delete dir="bin"/>
+		<delete dir="dist"/>
+	</target>
+
 </project>
