@@ -18,12 +18,11 @@ import javax.xml.stream.events.Characters;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-public class XMLHyphenationTransformer {
+public class HyphenationTransformer {
 	static final String dtb = "http://www.daisy.org/z3986/2005/dtbook/";
 	static final String brl = "http://www.daisy.org/z3986/2009/braille/";
 	
-	//static final char SOFT_HYPHEN = '\u00AD';
-	static final char SOFT_HYPHEN = '=';
+	static final char SOFT_HYPHEN = '\u00AD';
 	
 	static final Set<QName> nonHyphenatedElements;
 	static final QName xml_lang = new QName("http://www.w3.org/XML/1998/namespace",
@@ -42,16 +41,17 @@ public class XMLHyphenationTransformer {
 
 	XMLEventFactory m_eventFactory = XMLEventFactory.newInstance();
 
-	public XMLHyphenationTransformer() {
+	public HyphenationTransformer() {
 	}
 
 	public static void main(String[] args) {
 		if (args.length < 1) {
 			System.out.println("Usage: Specify XML File Name");
+			System.exit(1);
 		}
 
 		try {
-			XMLHyphenationTransformer transformer = new XMLHyphenationTransformer();
+			HyphenationTransformer transformer = new HyphenationTransformer();
 
 			XMLEventReader reader = XMLInputFactory.newInstance()
 					.createXMLEventReader(new java.io.FileInputStream(args[0]));
@@ -78,7 +78,7 @@ public class XMLHyphenationTransformer {
 				} else if (event.isEndElement()) {
 					if (event.asEndElement().getName()
 							.equals(languages.peek().getNode())) {
-						languages.peek().getHyphenator().close();
+						//languages.peek().getHyphenator().close();
 						languages.pop();
 					}
 					if (nonHyphenatedElements.contains(event.asEndElement()
