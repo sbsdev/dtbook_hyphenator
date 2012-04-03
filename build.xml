@@ -2,12 +2,12 @@
 <!-- ====================================================================== 
      Mar 29, 2012 11:38:18 AM                                                        
 
-     XMLHyphenationTransformer    
+     dtbook_hyphenator    
      A simple StAX transformer that hyphenates text nodes
                    
      christian.egli@sbs.ch                                                                
      ====================================================================== -->
-<project name="XMLHyphenationTransformer" default="default">
+<project name="dtbook_hyphenator" default="default">
 	<description>
             A simple Stax transformer that hyphenates text nodes
     </description>
@@ -39,7 +39,8 @@
 	<target name="compile" depends="clean">
 		<mkdir dir="bin"/>
         <javac srcdir="src" destdir="bin" classpath="lib/jhyphen.jar"
-               debug="true" encoding="UTF-8" source="1.6" target="1.6"/>
+               debug="true" encoding="UTF-8" source="1.6" target="1.6"
+			   includeantruntime="false"/>
 	</target>
 	
 	<target name="clean">
