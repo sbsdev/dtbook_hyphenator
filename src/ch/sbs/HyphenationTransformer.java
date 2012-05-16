@@ -2,6 +2,12 @@ package ch.sbs;
 
 import ch.sbs.jhyphen.Hyphenator;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
+import java.io.Writer;
+import java.nio.charset.UnsupportedCharsetException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -14,6 +20,7 @@ import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLEventWriter;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.Characters;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
@@ -50,57 +57,62 @@ public class HyphenationTransformer {
 			System.exit(1);
 		}
 
+		HyphenationTransformer transformer = new HyphenationTransformer();
+		
 		try {
-			HyphenationTransformer transformer = new HyphenationTransformer();
+			transformer.transform(new FileReader(args[0]), new OutputStreamWriter(System.out));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void transform (Reader input, Writer output)
+			throws XMLStreamException, UnsupportedCharsetException, FileNotFoundException {
+		
+		XMLEventReader reader = XMLInputFactory.newInstance()
+				.createXMLEventReader(input);
+		XMLEventWriter writer = XMLOutputFactory.newInstance()
+				.createXMLEventWriter(output);
 
-			XMLEventReader reader = XMLInputFactory.newInstance()
-					.createXMLEventReader(new java.io.FileInputStream(args[0]));
-			XMLEventWriter writer = XMLOutputFactory.newInstance()
-					.createXMLEventWriter(System.out);
+		boolean hyphenate = true;
+		Stack<Tuple> languages = new Stack<Tuple>();
 
-			boolean hyphenate = true;
-			Stack<Tuple> languages = new Stack<Tuple>();
+		while (reader.hasNext()) {
+			XMLEvent event = (XMLEvent) reader.next();
 
-			while (reader.hasNext()) {
-				XMLEvent event = (XMLEvent) reader.next();
-
-				if (event.isStartElement()) {
-					if (event.asStartElement().getAttributeByName(xml_lang) != null) {
-						StartElement element = event.asStartElement();
-						languages.push(new Tuple(element.getName(), 
-								new Hyphenator(element.getAttributeByName(xml_lang).getValue())));
-					}
-					if (nonHyphenatedElements.contains(event.asStartElement()
-							.getName())) {
-						hyphenate = false;
-					}
-					writer.add(event);
-				} else if (event.isEndElement()) {
-					if (event.asEndElement().getName()
-							.equals(languages.peek().getNode())) {
-						//languages.peek().getHyphenator().close();
-						languages.pop();
-					}
-					if (nonHyphenatedElements.contains(event.asEndElement()
-							.getName())) {
-						hyphenate = true;
-					}
-					writer.add(event);
-				} else if (event.isCharacters()) {
-					if (hyphenate && !languages.empty()) {
-						writer.add(transformer.hyphenate(event.asCharacters(),
-								languages.peek().getHyphenator()));
-					} else {
-						writer.add(event);
-					}
+			if (event.isStartElement()) {
+				if (event.asStartElement().getAttributeByName(xml_lang) != null) {
+					StartElement element = event.asStartElement();
+					languages.push(new Tuple(element.getName(), 
+							new Hyphenator(element.getAttributeByName(xml_lang).getValue())));
+				}
+				if (nonHyphenatedElements.contains(event.asStartElement()
+						.getName())) {
+					hyphenate = false;
+				}
+				writer.add(event);
+			} else if (event.isEndElement()) {
+				if (event.asEndElement().getName()
+						.equals(languages.peek().getNode())) {
+					languages.pop().getHyphenator().close();
+				}
+				if (nonHyphenatedElements.contains(event.asEndElement()
+						.getName())) {
+					hyphenate = true;
+				}
+				writer.add(event);
+			} else if (event.isCharacters()) {
+				if (hyphenate && !languages.empty()) {
+					writer.add(hyphenate(event.asCharacters(),
+							languages.peek().getHyphenator()));
 				} else {
 					writer.add(event);
 				}
+			} else {
+				writer.add(event);
 			}
-			writer.flush();
-		} catch (Exception ex) {
-			ex.printStackTrace();
 		}
+		writer.flush();
 	}
 
 	Characters hyphenate(Characters event, Hyphenator hyphenator) {
