@@ -24,21 +24,6 @@ public class HyphenationTransformerTest {
 	@Test
 	public void testMisc()
 			throws UnsupportedCharsetException, FileNotFoundException, XMLStreamException, IOException, SAXException {
-		
-		String unhyphenated = "<dtbook version=\"2005-3\"" +
-				  			  "        xmlns=\"http://www.daisy.org/z3986/2005/dtbook/\"" +
-							  "        xml:lang=\"de-DE\">" +
-							  "  <book>" +
-							  "    <bodymatter>" +
-							  "      <level1>" +
-							  "        <h1>Dampfschiff</h1>" +
-							  "        <p>Dampfschiff</p>" +
-							  "        <p>Dampf-schiff</p>" +
-							  "        <p><a>www.dampfschiff.ch</a></p>" +
-							  "      </level1>" +
-							  "    </bodymatter>" +
-							  "  </book>" +
-							  "</dtbook>";
 
 		String correctlyHyphenated = "<dtbook version=\"2005-3\"" +
 									 "        xmlns=\"http://www.daisy.org/z3986/2005/dtbook/\"" +
@@ -54,9 +39,20 @@ public class HyphenationTransformerTest {
 									 "    </bodymatter>" +
 									 "  </book>" +
 									 "</dtbook>";
-
-		checkHyphenation(unhyphenated, correctlyHyphenated);
 		
+		checkHyphenation(correctlyHyphenated);
+	}
+	
+	/**
+	 * Check hyphenation by first removing all soft hyphens and then inserting them again
+	 *   with HyphenationTransformer
+	 * @param correctlyHyphenated
+	 */
+	public static void checkHyphenation(String correctlyHyphenated)
+			throws UnsupportedCharsetException, XMLStreamException, SAXException, IOException {
+		
+		String unhyphenated = correctlyHyphenated.replaceAll("\u00AD", "");
+		checkHyphenation(unhyphenated, correctlyHyphenated);
 	}
 	
 	public static void checkHyphenation(String unhyphenated, String correctlyHyphenated)
