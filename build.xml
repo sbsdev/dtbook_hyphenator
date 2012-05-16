@@ -30,21 +30,24 @@
 		</jar>
 	</target>
 
-	<target name="compile" depends="clean">
+	<target name="compile">
 		<mkdir dir="bin" />
+		<depend srcdir="src" destdir="bin"/>
 		<javac srcdir="src" destdir="bin" classpath="lib/jhyphen.jar" debug="true" encoding="UTF-8" source="1.6" target="1.6" includeantruntime="false" />
 	</target>
 
 	<target name="clean">
-		<delete dir="bin" />
 		<delete dir="dist" />
 		<delete dir="${ant.project.name}.zip" />
 	</target>
 
-	<target name="dist" depends="jar" description="Builds a zipfile containing everything needed to run the transformator">
+	<target name="dist" depends="jar,clean" description="Builds a zipfile containing everything needed to run the transformator">
+		<mkdir dir="dist" />
 		<zip destfile="${ant.project.name}.zip">
 			<zipfileset dir="lib" prefix="${ant.project.name}/lib">
 				<include name="*.jar" />
+				<exclude name="junit*" />
+				<exclude name="xmlunit*" />
 			</zipfileset>
 			<zipfileset dir="dist" prefix="${ant.project.name}">
 				<include name="*.jar" />
@@ -54,6 +57,24 @@
 				<include name="README" />
 			</zipfileset>
 		</zip>
+	</target>
+	
+	<target name="test" description="Unit tests" depends="compile">
+		<junit printsummary="yes" fork="yes" haltonfailure="no" haltonerror="no">
+			<formatter type="plain" usefile="false" />
+			<classpath>
+				<pathelement location="bin" />
+				<pathelement location="lib/jhyphen.jar" />
+				<pathelement location="lib/xmlunit-1.2.jar" />
+				<pathelement location="lib/junit-4.8.2.jar" />
+			</classpath>
+			<batchtest>
+				<formatter type="plain" usefile="false" />
+				<fileset dir="test">
+					<include name="**/*Test.java" />
+				</fileset>
+			</batchtest>
+		</junit>
 	</target>
 
 </project>
