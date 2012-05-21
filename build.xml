@@ -19,7 +19,10 @@
 	<target name="jar" depends="clean,compile">
 		<mkdir dir="dist" />
 		<jar destfile="dist/${ant.project.name}.jar">
-			<fileset dir="bin" />
+			<fileset dir="bin">
+				<include name="**/*.java"/>
+				<exclude name="**/*Test*"/>
+			</fileset>
 			<manifest>
 				<attribute name="Built-By" value="${user.name}" />
 				<attribute name="Built-On" value="${ISO-TODAY}" />
@@ -33,7 +36,8 @@
 	<target name="compile">
 		<mkdir dir="bin" />
 		<depend srcdir="src" destdir="bin"/>
-		<javac srcdir="src" destdir="bin" classpath="lib/jhyphen.jar" debug="true" encoding="UTF-8" source="1.6" target="1.6" includeantruntime="false" />
+		<javac srcdir="src" destdir="bin" classpath="lib/jhyphen.jar" debug="true" encoding="UTF-8"
+			source="1.6" target="1.6" includeantruntime="false" />
 	</target>
 
 	<target name="clean">
@@ -41,7 +45,8 @@
 		<delete dir="${ant.project.name}.zip" />
 	</target>
 
-	<target name="dist" depends="jar,clean" description="Builds a zipfile containing everything needed to run the transformator">
+	<target name="dist" depends="clean,jar"
+		description="Builds a zipfile containing everything needed to run the transformator">
 		<mkdir dir="dist" />
 		<zip destfile="${ant.project.name}.zip">
 			<zipfileset dir="lib" prefix="${ant.project.name}/lib">
@@ -59,7 +64,27 @@
 		</zip>
 	</target>
 	
-	<target name="test" description="Unit tests" depends="compile">
+	<target name="compile-test" description="compile-test" depends="compile">
+		<depend srcdir="test" destdir="bin"/>
+		<javac srcdir="test" destdir="bin" debug="true" encoding="UTF-8" source="1.6" target="1.6"
+			includeantruntime="false">
+			<classpath>
+				<pathelement location="bin" />
+				<pathelement location="lib/jhyphen.jar" />
+				<pathelement location="lib/xmlunit-1.2.jar" />
+				<pathelement location="lib/junit-4.8.2.jar" />
+			</classpath>
+		</javac>
+		<copy todir="bin">
+			<fileset dir="test">
+				<patternset>
+					<include name="**/*.xml"/>
+				</patternset>
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="test" description="Unit tests" depends="compile-test">
 		<junit printsummary="yes" fork="yes" haltonfailure="no" haltonerror="no">
 			<formatter type="plain" usefile="false" />
 			<classpath>
