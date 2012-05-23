@@ -2,8 +2,11 @@ package ch.sbs;
 
 import ch.sbs.jhyphen.Hyphenator;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
@@ -15,6 +18,7 @@ import java.util.Set;
 import java.util.Stack;
 
 import javax.xml.namespace.QName;
+import javax.xml.stream.FactoryConfigurationError;
 import javax.xml.stream.XMLEventFactory;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLEventWriter;
@@ -24,6 +28,8 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.Characters;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
+
+import org.apache.commons.io.input.BOMInputStream;
 
 public class HyphenationTransformer {
 	static final String dtb = "http://www.daisy.org/z3986/2005/dtbook/";
@@ -60,26 +66,36 @@ public class HyphenationTransformer {
 		HyphenationTransformer transformer = new HyphenationTransformer();
 		
 		try {
-			transformer.transform(new FileReader(args[0]), new OutputStreamWriter(System.out));
+			transformer.transform(new BOMInputStream(new FileInputStream(args[0])), System.out);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void transform (Reader input, Writer output)
+	public void transform(InputStream input, OutputStream output)
 			throws XMLStreamException, UnsupportedCharsetException, FileNotFoundException {
 		
-		XMLEventReader reader = XMLInputFactory.newInstance()
-				.createXMLEventReader(input);
-		XMLEventWriter writer = XMLOutputFactory.newInstance()
-				.createXMLEventWriter(output);
+		transform(XMLInputFactory.newInstance().createXMLEventReader(input),
+				XMLOutputFactory.newInstance().createXMLEventWriter(output));
+	}
+	
+	public void transform(Reader input, Writer output)
+			throws XMLStreamException, UnsupportedCharsetException, FileNotFoundException {
+		
+		transform(XMLInputFactory.newInstance().createXMLEventReader(input),
+				XMLOutputFactory.newInstance().createXMLEventWriter(output));
+	}
+	
+	public void transform(XMLEventReader reader, XMLEventWriter writer)
+			throws XMLStreamException, UnsupportedCharsetException, FileNotFoundException {
 
 		boolean hyphenate = true;
 		Stack<Tuple> languages = new Stack<Tuple>();
 
 		while (reader.hasNext()) {
-			XMLEvent event = (XMLEvent) reader.next();
 
+			XMLEvent event = reader.nextEvent();
+			
 			if (event.isStartElement()) {
 				if (event.asStartElement().getAttributeByName(xml_lang) != null) {
 					StartElement element = event.asStartElement();
