@@ -20,7 +20,7 @@
 		<mkdir dir="dist" />
 		<jar destfile="dist/${ant.project.name}.jar">
 			<fileset dir="bin">
-				<include name="**/*.java"/>
+				<include name="**/*.class"/>
 				<exclude name="**/*Test*"/>
 			</fileset>
 			<manifest>
