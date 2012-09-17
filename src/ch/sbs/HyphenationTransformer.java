@@ -4,10 +4,8 @@ import ch.sbs.jhyphen.Hyphenator;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.UnsupportedCharsetException;
@@ -18,7 +16,6 @@ import java.util.Set;
 import java.util.Stack;
 
 import javax.xml.namespace.QName;
-import javax.xml.stream.FactoryConfigurationError;
 import javax.xml.stream.XMLEventFactory;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLEventWriter;
@@ -73,21 +70,21 @@ public class HyphenationTransformer {
 	}
 	
 	public void transform(InputStream input, OutputStream output)
-			throws XMLStreamException, UnsupportedCharsetException, FileNotFoundException {
+			throws XMLStreamException {
 		
 		transform(XMLInputFactory.newInstance().createXMLEventReader(input),
 				XMLOutputFactory.newInstance().createXMLEventWriter(output));
 	}
 	
 	public void transform(Reader input, Writer output)
-			throws XMLStreamException, UnsupportedCharsetException, FileNotFoundException {
+			throws XMLStreamException {
 		
 		transform(XMLInputFactory.newInstance().createXMLEventReader(input),
 				XMLOutputFactory.newInstance().createXMLEventWriter(output));
 	}
 	
 	public void transform(XMLEventReader reader, XMLEventWriter writer)
-			throws XMLStreamException, UnsupportedCharsetException, FileNotFoundException {
+			throws XMLStreamException {
 
 		boolean hyphenate = true;
 		Stack<Tuple> languages = new Stack<Tuple>();
@@ -99,8 +96,14 @@ public class HyphenationTransformer {
 			if (event.isStartElement()) {
 				if (event.asStartElement().getAttributeByName(xml_lang) != null) {
 					StartElement element = event.asStartElement();
-					languages.push(new Tuple(element.getName(), 
-							new Hyphenator(element.getAttributeByName(xml_lang).getValue())));
+					Hyphenator hyphenator = null;
+					try {
+						hyphenator = new Hyphenator(
+								element.getAttributeByName(xml_lang).getValue());
+					} catch (UnsupportedCharsetException e) {
+					} catch (FileNotFoundException e) {
+					}
+					languages.push(new Tuple(element.getName(), hyphenator));
 				}
 				if (nonHyphenatedElements.contains(event.asStartElement()
 						.getName())) {
@@ -110,7 +113,8 @@ public class HyphenationTransformer {
 			} else if (event.isEndElement()) {
 				if (event.asEndElement().getName()
 						.equals(languages.peek().getNode())) {
-					languages.pop().getHyphenator().close();
+					Hyphenator hyphenator = languages.pop().getHyphenator();
+					if (hyphenator != null) { hyphenator.close(); }
 				}
 				if (nonHyphenatedElements.contains(event.asEndElement()
 						.getName())) {
@@ -119,8 +123,12 @@ public class HyphenationTransformer {
 				writer.add(event);
 			} else if (event.isCharacters()) {
 				if (hyphenate && !languages.empty()) {
-					writer.add(hyphenate(event.asCharacters(),
-							languages.peek().getHyphenator()));
+					Hyphenator hyphenator = languages.peek().getHyphenator();
+					if (hyphenator != null) {
+						writer.add(hyphenate(event.asCharacters(), hyphenator));
+					} else {
+						writer.add(event);
+					}
 				} else {
 					writer.add(event);
 				}
