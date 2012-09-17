@@ -2,10 +2,8 @@ package ch.sbs;
 
 import static org.junit.Assert.*;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -17,6 +15,7 @@ import javax.xml.stream.XMLStreamException;
 
 import org.custommonkey.xmlunit.Diff;
 import org.custommonkey.xmlunit.XMLUnit;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
@@ -58,7 +57,7 @@ public class HyphenationTransformerTest {
 									 "  <book>" +
 									 "    <bodymatter>" +
 									 "      <level1>" +
-									 "        <p>EinSehrLan­ge­sWor­tMitStud­lyCapsDassSichÜ­berMeh­re­reZei­lenHin­weg­ziehtUn­dZu­demEin­fachNochWahn­sin­nigGutAus­sieht</p>" +
+									 "        <p>Ein­Sehr­Lan­ges­Wort­Mit­Stud­ly­Caps­Dass­Sich­Über­Meh­re­re­Zei­len­Hin­weg­ziehtUnd­Zu­de­mEin­fach­Noch­Wahn­sin­nig­Gut­Aus­sieht</p>" +
 									 "      </level1>" +
 									 "    </bodymatter>" +
 									 "  </book>" +
@@ -67,6 +66,7 @@ public class HyphenationTransformerTest {
 		checkHyphenation(correctlyHyphenated);
 	}
 	
+	@Ignore
 	@Test
 	public void testLargeFile()
 			throws UnsupportedCharsetException, XMLStreamException, SAXException, IOException, URISyntaxException {
