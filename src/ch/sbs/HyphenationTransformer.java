@@ -40,12 +40,18 @@ public class HyphenationTransformer {
 
 	static {
 		Set<QName> tmp = new HashSet<QName>();
-		tmp.addAll(Arrays.asList(new QName(dtb, "a"), new QName(dtb, "abbr"),
-				new QName(dtb, "abbr"), new QName(dtb, "h1"), new QName(dtb,
-						"h2"), new QName(dtb, "h3"), new QName(dtb, "h4"),
-				new QName(dtb, "h5"), new QName(dtb, "h6"), new QName(brl,
-						"running-line"), new QName(brl, "literal"), new QName(
-						brl, "num")));
+		tmp.addAll(Arrays.asList(new QName(dtb, "a"), 
+					 new QName(dtb, "abbr"),
+					 new QName(dtb, "h1"), 
+					 new QName(dtb,	"h2"), 
+					 new QName(dtb, "h3"), 
+					 new QName(dtb, "h4"),
+					 new QName(dtb, "h5"), 
+					 new QName(dtb, "h6"),
+					 new QName(dtb, "code"),
+					 new QName(brl,	"running-line"), 
+					 new QName(brl, "literal"), 
+					 new QName(brl, "num")));
 		nonHyphenatedElements = Collections.unmodifiableSet(tmp);
 	}
 
