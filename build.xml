@@ -27,7 +27,7 @@
 				<attribute name="Built-By" value="${user.name}" />
 				<attribute name="Built-On" value="${ISO-TODAY}" />
 				<attribute name="Implementation-Title" value="${ant.project.name}" />
-				<attribute name="Class-Path" value="lib/jhyphen.jar lib/commons-io-2.2.jar" />
+				<attribute name="Class-Path" value="lib/jhyphen.jar lib/commons-io-2.2.jar lib/jna.jar" />
 				<attribute name="Main-Class" value="ch.sbs.HyphenationTransformer" />
 			</manifest>
 		</jar>
