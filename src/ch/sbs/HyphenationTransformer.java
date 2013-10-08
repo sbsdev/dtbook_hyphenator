@@ -33,6 +33,7 @@ public class HyphenationTransformer {
 	static final String brl = "http://www.daisy.org/z3986/2009/braille/";
 	
 	static final char SOFT_HYPHEN = '\u00AD';
+	static final char ZERO_WIDTH_SPACE = '\u200B';
 	
 	static final Set<QName> nonHyphenatedElements;
 	static final QName xml_lang = new QName("http://www.w3.org/XML/1998/namespace",
@@ -150,6 +151,6 @@ public class HyphenationTransformer {
 	}
 
 	Characters hyphenate(Characters event, Hyphenator hyphenator) {
-		return m_eventFactory.createCharacters(hyphenator.hyphenate(event.getData(), SOFT_HYPHEN));
+	    return m_eventFactory.createCharacters(hyphenator.hyphenate(event.getData(), SOFT_HYPHEN, SOFT_HYPHEN));
 	}
 }

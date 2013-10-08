@@ -57,7 +57,7 @@ public class HyphenationTransformerTest {
 									 "  <book>" +
 									 "    <bodymatter>" +
 									 "      <level1>" +
-									 "        <p>Ein­Sehr­Lan­ges­Wort­Mit­Stud­ly­Caps­Dass­Sich­Über­Meh­re­re­Zei­len­Hin­weg­ziehtUnd­Zu­de­mEin­fach­Noch­Wahn­sin­nig­Gut­Aus­sieht</p>" +
+									 "        <p>EinSehr­Lan­ges­Wort­Mit­Stud­ly­Caps­Dass­Sich­Über­Meh­re­re­Zei­len­Hin­weg­ziehtUnd­Zu­de­mEin­fach­Noch­Wahn­sin­nig­Gut­Aus­sieht</p>" +
 									 "      </level1>" +
 									 "    </bodymatter>" +
 									 "  </book>" +

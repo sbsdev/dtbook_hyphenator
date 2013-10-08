@@ -94,11 +94,12 @@
 		<junit printsummary="yes" fork="yes" haltonfailure="no" haltonerror="no">
 			<formatter type="plain" usefile="false" />
 			<classpath>
-				<pathelement location="bin" />
-			    <pathelement location="lib/jhyphen.jar" />
-			    <pathelement location="lib/commons-io-2.2.jar" />
-				<pathelement location="lib/xmlunit-1.2.jar" />
-				<pathelement location="lib/junit-4.8.2.jar" />
+			  <pathelement location="bin" />
+			  <pathelement location="lib/jhyphen.jar" />
+			  <pathelement location="lib/jna.jar" />
+			  <pathelement location="lib/commons-io-2.2.jar" />
+			  <pathelement location="lib/xmlunit-1.2.jar" />
+			  <pathelement location="lib/junit-4.8.2.jar" />
 			</classpath>
 			<batchtest>
 				<formatter type="plain" usefile="false" />
