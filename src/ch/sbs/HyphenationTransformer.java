@@ -66,14 +66,16 @@ public class HyphenationTransformer {
 
 	public static void main(String[] args) {
 		if (args.length < 1) {
-			System.out.println("Usage: Specify XML File Name");
+			System.out.println("Usage: Specify XML File Name or '-' to read from stdin");
 			System.exit(1);
 		}
-
-		HyphenationTransformer transformer = new HyphenationTransformer();
 		
 		try {
-			transformer.transform(new BOMInputStream(new FileInputStream(args[0])), System.out);
+			HyphenationTransformer transformer = new HyphenationTransformer();
+			InputStream in = ("-".equals(args[0])) ?
+					System.in :
+					new BOMInputStream(new FileInputStream(args[0]));
+			transformer.transform(in, System.out);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
