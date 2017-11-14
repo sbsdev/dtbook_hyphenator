@@ -56,6 +56,7 @@ public class HyphenationTransformer {
 					 new QName(dtb, "td"),
 					 new QName(brl, "running-line"),
 					 new QName(brl, "literal"),
+					 new QName(brl, "computer"),
 					 new QName(brl, "num")));
 		nonHyphenatedElements = Collections.unmodifiableSet(tmp);
 	}

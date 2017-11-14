@@ -66,6 +66,41 @@ public class HyphenationTransformerTest {
 		checkHyphenation(correctlyHyphenated);
 	}
 	
+	@Test
+	public void testBrlComputer()
+	    throws UnsupportedCharsetException, FileNotFoundException, XMLStreamException, IOException, SAXException {
+
+	    String unHyphenated = "<dtbook version=\"2005-3\"" +
+		"        xmlns=\"http://www.daisy.org/z3986/2005/dtbook/\"" +
+		"        xmlns:brl=\"http://www.daisy.org/z3986/2009/braille/\"" +
+		"        xml:lang=\"de-DE\">" +
+		"  <book>" +
+		"    <bodymatter>" +
+		"      <level1>" +
+		"        <p>Wahnsinnig</p>" +
+		"        <brl:computer>Wahnsinnig</brl:computer>" +
+		"      </level1>" +
+		"    </bodymatter>" +
+		"  </book>" +
+		"</dtbook>";
+
+	    String correctlyHyphenated = "<dtbook version=\"2005-3\"" +
+		"        xmlns=\"http://www.daisy.org/z3986/2005/dtbook/\"" +
+		"        xmlns:brl=\"http://www.daisy.org/z3986/2009/braille/\"" +
+		"        xml:lang=\"de-DE\">" +
+		"  <book>" +
+		"    <bodymatter>" +
+		"      <level1>" +
+		"        <p>Wahn­sin­nig</p>" +
+		"        <brl:computer>Wahnsinnig</brl:computer>" +
+		"      </level1>" +
+		"    </bodymatter>" +
+		"  </book>" +
+		"</dtbook>";
+
+	    checkHyphenation(correctlyHyphenated);
+	}
+
 	@Ignore
 	@Test
 	public void testLargeFile()
