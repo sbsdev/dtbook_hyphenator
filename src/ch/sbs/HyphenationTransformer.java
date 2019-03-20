@@ -101,6 +101,10 @@ public class HyphenationTransformer {
 		boolean hyphenate = true;
 		Stack<Tuple> languages = new Stack<Tuple>();
 
+		boolean insidePoem = false;
+		QName poem = new QName(dtb, "poem");
+		QName line = new QName(dtb, "line");
+
 		while (reader.hasNext()) {
 
 			XMLEvent event = reader.nextEvent();
@@ -121,6 +125,12 @@ public class HyphenationTransformer {
 						.getName())) {
 					hyphenate = false;
 				}
+				if (event.asStartElement().getName().equals(poem)) {
+					insidePoem = true;
+				}
+				if (insidePoem && event.asStartElement().getName().equals(line)) {
+					hyphenate = false;
+				}
 				writer.add(event);
 			} else if (event.isEndElement()) {
 				if (event.asEndElement().getName()
@@ -130,6 +140,12 @@ public class HyphenationTransformer {
 				}
 				if (nonHyphenatedElements.contains(event.asEndElement()
 						.getName())) {
+					hyphenate = true;
+				}
+				if (event.asEndElement().getName().equals(poem)) {
+					insidePoem = false;
+				}
+				if (insidePoem && event.asEndElement().getName().equals(line)) {
 					hyphenate = true;
 				}
 				writer.add(event);

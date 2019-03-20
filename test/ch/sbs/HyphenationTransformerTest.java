@@ -101,6 +101,41 @@ public class HyphenationTransformerTest {
 	    checkHyphenation(correctlyHyphenated);
 	}
 
+	@Test
+	public void testPoem()
+	    throws UnsupportedCharsetException, FileNotFoundException, XMLStreamException, IOException, SAXException {
+
+	    String unHyphenated = "<dtbook version=\"2005-3\"" +
+		"        xmlns=\"http://www.daisy.org/z3986/2005/dtbook/\"" +
+		"        xmlns:brl=\"http://www.daisy.org/z3986/2009/braille/\"" +
+		"        xml:lang=\"de-DE\">" +
+		"  <book>" +
+		"    <bodymatter>" +
+		"      <poem>" +
+		"        <line>Wahnsinnig</line>" +
+		"        <span>Wahnsinnig</span>" +
+		"      </poem>" +
+		"    </bodymatter>" +
+		"  </book>" +
+		"</dtbook>";
+
+	    String correctlyHyphenated = "<dtbook version=\"2005-3\"" +
+		"        xmlns=\"http://www.daisy.org/z3986/2005/dtbook/\"" +
+		"        xmlns:brl=\"http://www.daisy.org/z3986/2009/braille/\"" +
+		"        xml:lang=\"de-DE\">" +
+		"  <book>" +
+		"    <bodymatter>" +
+		"      <poem>" +
+		"        <line>Wahnsinnig</line>" +
+		"        <span>Wahn­sin­nig</span>" +
+		"      </poem>" +
+		"    </bodymatter>" +
+		"  </book>" +
+		"</dtbook>";
+
+	    checkHyphenation(unHyphenated, correctlyHyphenated);
+	}
+
 	@Ignore
 	@Test
 	public void testLargeFile()
