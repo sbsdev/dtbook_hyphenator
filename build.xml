@@ -37,7 +37,7 @@
 		<mkdir dir="bin" />
 		<depend srcdir="src" destdir="bin"/>
 		<javac srcdir="src" destdir="bin" debug="true" encoding="UTF-8"
-		    source="1.6" target="1.6" includeantruntime="false">
+		    source="1.8" target="1.8" includeantruntime="false">
 		    <classpath>
 		        <pathelement location="lib/jhyphen.jar" />
 		        <pathelement location="lib/commons-io-2.2.jar" />
@@ -46,6 +46,7 @@
 	</target>
 
 	<target name="clean">
+		<delete dir="bin" />
 		<delete dir="dist" />
 		<delete dir="${ant.project.name}.zip" />
 	</target>
