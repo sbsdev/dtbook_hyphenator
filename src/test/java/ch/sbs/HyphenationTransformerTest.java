@@ -27,43 +27,43 @@ public class HyphenationTransformerTest {
 	
 	@Test
 	public void testMisc()
-			throws UnsupportedCharsetException, FileNotFoundException, XMLStreamException, IOException, SAXException {
-
-		String correctlyHyphenated = "<dtbook version=\"2005-3\"" +
-									 "        xmlns=\"http://www.daisy.org/z3986/2005/dtbook/\"" +
-									 "        xml:lang=\"de-DE\">" +
-									 "  <book>" +
-									 "    <bodymatter>" +
-									 "      <level1>" +
-									 "        <h1>Dampfschiff</h1>" +
-									 "        <p>Dampf\u00ADschiff</p>" +
-									 "        <p>Dampf-\u00ADschiff</p>" +
-									 "        <p><a>www.dampfschiff.ch</a></p>" +
-									 "      </level1>" +
-									 "    </bodymatter>" +
-									 "  </book>" +
-									 "</dtbook>";
+	    throws UnsupportedCharsetException, FileNotFoundException, XMLStreamException, IOException, SAXException {
+	    
+	    String correctlyHyphenated = "<dtbook version=\"2005-3\"" +
+		"        xmlns=\"http://www.daisy.org/z3986/2005/dtbook/\"" +
+		"        xml:lang=\"de-DE\">" +
+		"  <book>" +
+		"    <bodymatter>" +
+		"      <level1>" +
+		"        <h1>Dampfschiff</h1>" +
+		"        <p>Dampf\u00ADschiff</p>" +
+		"        <p>Dampf-\u00ADschiff</p>" +
+		"        <p><a>www.dampfschiff.ch</a></p>" +
+		"      </level1>" +
+		"    </bodymatter>" +
+		"  </book>" +
+		"</dtbook>";
 		
-		checkHyphenation(correctlyHyphenated);
+	    checkHyphenation(correctlyHyphenated);
 	}
 	
-	@Test
+        @Test
 	public void testVeryLongWord()
-			throws UnsupportedCharsetException, FileNotFoundException, XMLStreamException, IOException, SAXException {
-
-		String correctlyHyphenated = "<dtbook version=\"2005-3\"" +
-									 "        xmlns=\"http://www.daisy.org/z3986/2005/dtbook/\"" +
-									 "        xml:lang=\"de-DE\">" +
-									 "  <book>" +
-									 "    <bodymatter>" +
-									 "      <level1>" +
-									 "        <p>EinSehr­Lan­ges­Wort­Mit­Stud­ly­Caps­Dass­Sich­Über­Meh­re­re­Zei­len­Hin­weg­ziehtUnd­Zu­de­mEin­fach­Noch­Wahn­sin­nig­Gut­Aus­sieht</p>" +
-									 "      </level1>" +
-									 "    </bodymatter>" +
-									 "  </book>" +
-									 "</dtbook>";
-		
-		checkHyphenation(correctlyHyphenated);
+	    throws UnsupportedCharsetException, FileNotFoundException, XMLStreamException, IOException, SAXException {
+	    
+	    String correctlyHyphenated = "<dtbook version=\"2005-3\"" +
+		"        xmlns=\"http://www.daisy.org/z3986/2005/dtbook/\"" +
+		"        xml:lang=\"de-DE\">" +
+		"  <book>" +
+		"    <bodymatter>" +
+		"      <level1>" +
+		"        <p>Ein­Sehr­Lan­ges­Wort­Mit­Stud­ly­Caps­Dass­Sich­Über­Meh­re­re­Zei­len­Hin­weg­ziehtUnd­Zu­de­mEin­fach­Noch­Wahn­sin­nig­Gut­Aus­sieht</p>" +
+		"      </level1>" +
+		"    </bodymatter>" +
+		"  </book>" +
+		"</dtbook>";
+	    
+	    checkHyphenation(correctlyHyphenated);
 	}
 	
 	@Test
