@@ -52,8 +52,8 @@ public class HyphenationTransformer {
 		put("de-DE", new File("/usr/share/hyphen/hyph_de_DE.dic"));
 		put("de_DE", new File("/usr/share/hyphen/hyph_de_DE.dic"));
 		put("de-1901", new File("/usr/share/hyphen/hyph_de_DE_OLDSPELL.dic"));
-		put("de-CH-1901", new File("=/usr/share/hyphen/hyph_de_DE_OLDSPELL.dic"));
-		put("gsw", new File("=/usr/share/hyphen/hyph_de_DE.dic"));
+		put("de-CH-1901", new File("/usr/share/hyphen/hyph_de_DE_OLDSPELL.dic"));
+		put("gsw", new File("/usr/share/hyphen/hyph_de_DE.dic"));
 		put("en", new File("/usr/share/hyphen/hyph_en_US.dic"));
 	    }};
 
@@ -64,8 +64,8 @@ public class HyphenationTransformer {
 	// 	"de-DE", new File("/usr/share/hyphen/hyph_de_DE.dic"),
 	// 	"de_DE", new File("/usr/share/hyphen/hyph_de_DE.dic"),
 	// 	"de-1901", new File("/usr/share/hyphen/hyph_de_DE_OLDSPELL.dic"),
-	// 	"de-CH-1901", new File("=/usr/share/hyphen/hyph_de_DE_OLDSPELL.dic"),
-	// 	"gsw", new File("=/usr/share/hyphen/hyph_de_DE.dic"),
+	// 	"de-CH-1901", new File("/usr/share/hyphen/hyph_de_DE_OLDSPELL.dic"),
+	// 	"gsw", new File("/usr/share/hyphen/hyph_de_DE.dic"),
 		
 	// 	"en", new File("/usr/share/hyphen/hyph_en_US.dic")
 	// );
