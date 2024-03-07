@@ -44,31 +44,18 @@ public class HyphenationTransformer {
 	static final QName xml_lang = new QName("http://www.w3.org/XML/1998/namespace",
 			"lang");
 
-        // FIXME: replace new HashMap with Map.of as soon as we move to modern Java
-        static final Map<String, File> dictionaries = new HashMap<String, File>() {{
-		put("de", new File("/usr/share/hyphen/hyph_de_DE.dic"));
-		put("de-CH", new File("/usr/share/hyphen/hyph_de_DE.dic"));
-		put("de_CH", new File("/usr/share/hyphen/hyph_de_DE.dic"));
-		put("de-DE", new File("/usr/share/hyphen/hyph_de_DE.dic"));
-		put("de_DE", new File("/usr/share/hyphen/hyph_de_DE.dic"));
-		put("de-1901", new File("/usr/share/hyphen/hyph_de_DE_OLDSPELL.dic"));
-		put("de-CH-1901", new File("/usr/share/hyphen/hyph_de_DE_OLDSPELL.dic"));
-		put("gsw", new File("/usr/share/hyphen/hyph_de_DE.dic"));
-		put("en", new File("/usr/share/hyphen/hyph_en_US.dic"));
-	    }};
-
-	// static final Map<String, File> dictionaries = Map.of(
-	// 	"de", new File("/usr/share/hyphen/hyph_de_DE.dic"),
-	// 	"de-CH", new File("/usr/share/hyphen/hyph_de_DE.dic"),
-	// 	"de_CH", new File("/usr/share/hyphen/hyph_de_DE.dic"),
-	// 	"de-DE", new File("/usr/share/hyphen/hyph_de_DE.dic"),
-	// 	"de_DE", new File("/usr/share/hyphen/hyph_de_DE.dic"),
-	// 	"de-1901", new File("/usr/share/hyphen/hyph_de_DE_OLDSPELL.dic"),
-	// 	"de-CH-1901", new File("/usr/share/hyphen/hyph_de_DE_OLDSPELL.dic"),
-	// 	"gsw", new File("/usr/share/hyphen/hyph_de_DE.dic"),
+	static final Map<String, File> dictionaries = Map.of(
+		"de", new File("/usr/share/hyphen/hyph_de_DE.dic"),
+		"de-CH", new File("/usr/share/hyphen/hyph_de_DE.dic"),
+		"de_CH", new File("/usr/share/hyphen/hyph_de_DE.dic"),
+		"de-DE", new File("/usr/share/hyphen/hyph_de_DE.dic"),
+		"de_DE", new File("/usr/share/hyphen/hyph_de_DE.dic"),
+		"de-1901", new File("/usr/share/hyphen/hyph_de_DE_OLDSPELL.dic"),
+		"de-CH-1901", new File("/usr/share/hyphen/hyph_de_DE_OLDSPELL.dic"),
+		"gsw", new File("/usr/share/hyphen/hyph_de_DE.dic"),
 		
-	// 	"en", new File("/usr/share/hyphen/hyph_en_US.dic")
-	// );
+		"en", new File("/usr/share/hyphen/hyph_en_US.dic")
+	);
 	
 	static {
 		Set<QName> tmp = new HashSet<QName>();
