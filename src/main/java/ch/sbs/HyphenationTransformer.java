@@ -132,12 +132,15 @@ public class HyphenationTransformer {
 					StartElement element = event.asStartElement();
 					Hyphenator hyphenator = null;
 					String lang = element.getAttributeByName(xml_lang).getValue();
-					try {
-						hyphenator = new Hyphenator(dictionaries.get(lang));
-					} catch (UnsupportedCharsetException e) {
-					} catch (CompilationException e) {
-					} catch (FileNotFoundException e) {
-					}
+					File dict = dictionaries.get(lang);
+					if (dict != null) {
+						try {
+						    hyphenator = new Hyphenator(dictionaries.get(lang));
+						} catch (UnsupportedCharsetException e) {
+						} catch (CompilationException e) {
+						} catch (FileNotFoundException e) {
+						}
+					    }
 					languages.push(new Tuple(element.getName(), hyphenator));
 				}
 				if (nonHyphenatedElements.contains(event.asStartElement()
