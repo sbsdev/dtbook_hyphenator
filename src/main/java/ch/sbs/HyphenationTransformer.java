@@ -52,7 +52,8 @@ public class HyphenationTransformer {
 		"de_DE", new File("/usr/share/hyphen/hyph_de_DE.dic"),
 		"de-1901", new File("/usr/share/hyphen/hyph_de_DE_OLDSPELL.dic"),
 		"de-CH-1901", new File("/usr/share/hyphen/hyph_de_DE_OLDSPELL.dic"),
-		"gsw", new File("/usr/share/hyphen/hyph_de_DE.dic")
+		// just use the base dictinoray for Swiss German
+		"gsw", new File("/usr/share/hyphen/hyph_de_DE_base.dic")
 		
 		//		"en", new File("/usr/share/hyphen/hyph_en_US.dic")
 	);
