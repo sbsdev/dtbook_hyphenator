@@ -27,5 +27,5 @@ jobs:
       with:
         draft: false
         prerelease: false
-        files: ./target/dtbook-hyphenator-*-shaded.jar
+        files: ./target/dtbook-hyphenator-*-standalone.jar
 
