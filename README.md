@@ -12,7 +12,7 @@ Authors
 Copyright and license
 ---------------------
 
-Copyright 2012 [Swiss Library for the Blind, Visually Impaired and Print Disabled][sbs]
+Copyright 2012-2025 [Swiss Library for the Blind, Visually Impaired and Print Disabled][sbs]
 
 Licensed under GNU Lesser General Public License as published by the Free Software Foundation, either [version 3][lgpl] of the License, or (at your option) any later version.
 
