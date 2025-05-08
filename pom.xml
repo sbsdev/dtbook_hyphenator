@@ -23,6 +23,7 @@
   </licenses>
 
   <scm>
+    <connection>scm:git:git://github.com/sbsdev/dtbook_hyphenator.git</connection>
     <developerConnection>scm:git:ssh://git@github.com:sbsdev/dtbook_hyphenator.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
