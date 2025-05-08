@@ -24,18 +24,18 @@
     <dependency>
       <groupId>org.xmlunit</groupId>
       <artifactId>xmlunit-legacy</artifactId>
-      <version>2.9.1</version>
+      <version>2.10.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
-      <version>2.15.1</version>
+      <version>2.19.0</version>
     </dependency>
     <dependency>
       <groupId>org.daisy.bindings</groupId>
       <artifactId>jhyphen</artifactId>
-      <version>1.0.2</version>
+      <version>1.0.4</version>
     </dependency>
   </dependencies>
   <build>
@@ -63,7 +63,7 @@
       <plugin>
 	<groupId>org.apache.maven.plugins</groupId>
 	<artifactId>maven-jar-plugin</artifactId>
-	<version>3.3.0</version>
+	<version>3.4.2</version>
 	<configuration>
           <archive>
             <manifest>
@@ -75,7 +75,7 @@
       <plugin>
 	<groupId>org.apache.maven.plugins</groupId>
 	<artifactId>maven-shade-plugin</artifactId>
-	<version>3.5.2</version>
+	<version>3.6.0</version>
 	<configuration>
 	  <shadedClassifierName>standalone</shadedClassifierName>
         </configuration>
