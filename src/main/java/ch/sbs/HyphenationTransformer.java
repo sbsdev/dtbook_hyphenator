@@ -68,6 +68,7 @@ public class HyphenationTransformer {
 					 new QName(dtb, "h4"),
 					 new QName(dtb, "h5"), 
 					 new QName(dtb, "h6"),
+					 new QName(dtb, "bridgehead"),
 					 new QName(dtb, "code"),
 					 new QName(dtb, "sup"),
 					 new QName(dtb, "sub"),

@@ -98,7 +98,42 @@ public class HyphenationTransformerTest {
 		"  </book>" +
 		"</dtbook>";
 
-	    checkHyphenation(correctlyHyphenated);
+	    checkHyphenation(unHyphenated, correctlyHyphenated);
+	}
+
+	@Test
+	public void testBridgehead()
+	    throws UnsupportedCharsetException, FileNotFoundException, XMLStreamException, IOException, SAXException {
+
+	    String unHyphenated = "<dtbook version=\"2005-3\"" +
+		"        xmlns=\"http://www.daisy.org/z3986/2005/dtbook/\"" +
+		"        xmlns:brl=\"http://www.daisy.org/z3986/2009/braille/\"" +
+		"        xml:lang=\"de-DE\">" +
+		"  <book>" +
+		"    <bodymatter>" +
+		"      <level1>" +
+		"        <bridgehead>Wahnsinnig</bridgehead>" +
+		"        <p>Wahnsinnig</p>" +
+		"      </level1>" +
+		"    </bodymatter>" +
+		"  </book>" +
+		"</dtbook>";
+
+	    String correctlyHyphenated = "<dtbook version=\"2005-3\"" +
+		"        xmlns=\"http://www.daisy.org/z3986/2005/dtbook/\"" +
+		"        xmlns:brl=\"http://www.daisy.org/z3986/2009/braille/\"" +
+		"        xml:lang=\"de-DE\">" +
+		"  <book>" +
+		"    <bodymatter>" +
+		"      <level1>" +
+		"        <bridgehead>Wahnsinnig</bridgehead>" +
+		"        <p>Wahn­sin­nig</p>" +
+		"      </level1>" +
+		"    </bodymatter>" +
+		"  </book>" +
+		"</dtbook>";
+
+	    checkHyphenation(unHyphenated, correctlyHyphenated);
 	}
 
 	@Test
