@@ -1,0 +1,35 @@
+* dtbook_hyphenator
+
+dtbook_hyphenator is a simple StAX transformer that hyphenates text
+nodes in a [[https://daisy.org/guidance/info-help/guidance-training/standards/daisy-structure-guidelines][DTBook]] document.
+
+** How to build
+
+#+BEGIN_EXAMPLE
+  mvn package
+#+END_EXAMPLE
+
+Create a release
+
+#+begin_src shell
+  mvn release:clean release:prepare
+  mvn release:perform -Darguments="-Dmaven.deploy.skip=true"
+#+end_src
+
+Once the release is built upload it to the [[https://github.com/sbsdev/dtbook_hyphenator/releases][github release page]] where
+it will be picked up by the [[https://github.com/sbsdev/sbs-infrastructure/tree/master/roles/hyphenator][ansible install scripts]].
+
+** Authors
+
++ [[http://github.com/bertfrees][Bert Frees]]
++ [[http://github.com/egli][Christian Egli]]
+
+** Copyright and license
+
+Copyright 2012-2025 [[http://www.sbs.ch][Swiss Library for the Blind, Visually Impaired and Print Disabled]]
+
+Licensed under GNU Lesser General Public License as published by the
+Free Software Foundation, either [[https://www.gnu.org/licenses/lgpl-3.0.html][version 3]] of the License, or (at your
+option) any later version.
+
+#+STARTUP: showall
