@@ -16,9 +16,6 @@ Create a release
   mvn release:perform -Darguments="-Dmaven.deploy.skip=true"
 #+end_src
 
-Once the release is built upload it to the [[https://github.com/sbsdev/dtbook_hyphenator/releases][github release page]] where
-it will be picked up by the [[https://github.com/sbsdev/sbs-infrastructure/tree/master/roles/hyphenator][ansible install scripts]].
-
 ** Authors
 
 + [[http://github.com/bertfrees][Bert Frees]]
